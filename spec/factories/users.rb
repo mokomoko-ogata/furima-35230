@@ -12,6 +12,6 @@ FactoryBot.define do
     first_name {Faker::Name.first_name}
     last_name_pronounce {person.last.katakana}
     first_name_pronounce {person.first.katakana}
-    birthday {Faker::Date.date}
+    birthday {Faker::Date.backward}
   end
 end
