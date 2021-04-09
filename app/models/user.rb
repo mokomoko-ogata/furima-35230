@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   validates :last_name, presence: true
   validates :first_name, presence: true
-  validates :last_name_pronounce, presence: true
-  validates :first_name_pronounce, presence: true
+  validates :last_name_pronounce, presence: true, format: { with: /\A[\p{katakana}]+\z/}
+  validates :first_name_pronounce, presence: true, format: { with: /\A[\p{katakana}]+\z/}
   validates :birthday, presence: true
 end
