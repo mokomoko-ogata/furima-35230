@@ -9,10 +9,11 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :shipping_date
 
+  VALID_PRICE_REGEX = /\A[0-9]+\z/
   with_options presence: true do
     validates :item_name
     validates :explain
-    validates :price
+    validates :price, format: { with: VALID_PASSWORD_REGEX }, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
     validates :image
   end
   with_options numericality: { other_than: 1 } do
