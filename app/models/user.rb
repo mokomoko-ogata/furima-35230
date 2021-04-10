@@ -16,5 +16,7 @@ class User < ApplicationRecord
     validates :first_name_pronounce, format: { with: VALID_NAME_PRONOUNCE_REGEX }
     validates :birthday
   end
+
+  has_many :items
   
 end
