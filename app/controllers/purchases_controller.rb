@@ -1,14 +1,9 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :create]
   before_action :set_item, only: [:index, :create]
-  before_action :move_to_index_for_current, only: [:index, :new, :create]
-  before_action :move_to_index_for_user, only: [:index, :new, :create]
+  before_action :move_to_index, only: [:index, :new, :create]
 
   def index
-    @purchase_destination = PurchaseDestination.new
-  end
-
-  def new
     @purchase_destination = PurchaseDestination.new
   end
 
@@ -45,10 +40,6 @@ class PurchasesController < ApplicationController
   end
 
   def move_to_index_for_current
-    redirect_to root_path if user_signed_in? && current_user.id == @item.user_id
-  end
-
-  def move_to_index_for_user
-    redirect_to root_path if user_signed_in? && @item.purchase.present?
+    redirect_to root_path if current_user.id == @item.user_id || @item.purchase.present?
   end
 end
