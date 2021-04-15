@@ -6,7 +6,7 @@ RSpec.describe PurchaseDestination, type: :model do
       user = FactoryBot.create(:user)
       @purchase_destination = FactoryBot.build(:purchase_destination, user_id: user.id)
     end
-    
+
     context '商品購入ができるとき' do
       it 'zip_code,purchase_id,municipality,address,telephone_number,tokenが存在すれば購入できること' do
         expect(@purchase_destination).to be_valid
@@ -23,10 +23,9 @@ RSpec.describe PurchaseDestination, type: :model do
       end
 
       it 'telephone_numberが11桁以内の場合購入できること' do
-        @purchase_destination.telephone_number = 12345678910
+        @purchase_destination.telephone_number = 12_345_678_910
         expect(@purchase_destination).to be_valid
       end
-
     end
 
     context '商品購入ができないとき' do
@@ -39,13 +38,13 @@ RSpec.describe PurchaseDestination, type: :model do
       it 'zip_codeはハイフンがないと購入できないこと' do
         @purchase_destination.zip_code = '1234567'
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include("Zip code is invalid. Include hyphen(-)")
+        expect(@purchase_destination.errors.full_messages).to include('Zip code is invalid. Include hyphen(-)')
       end
 
       it 'zip_codeは{3桁-4桁}以外の桁数では購入できないこと' do
         @purchase_destination.zip_code = '1234-567'
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include("Zip code is invalid. Include hyphen(-)")
+        expect(@purchase_destination.errors.full_messages).to include('Zip code is invalid. Include hyphen(-)')
       end
 
       it 'prefecture_idが1では購入できないこと' do
@@ -57,7 +56,7 @@ RSpec.describe PurchaseDestination, type: :model do
       it 'municipalityが空だと購入できないこと' do
         @purchase_destination.municipality = ''
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include("Municipality can't be blank" )
+        expect(@purchase_destination.errors.full_messages).to include("Municipality can't be blank")
       end
 
       it 'addressが空だと購入できないこと' do
@@ -73,15 +72,15 @@ RSpec.describe PurchaseDestination, type: :model do
       end
 
       it 'telephone_numberはハイフンがあると購入できないこと' do
-        @purchase_destination.telephone_number = 123-4567-8910
+        @purchase_destination.telephone_number = 123 - 4567 - 8910
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include("Telephone number is too short (minimum is 10 characters)")
+        expect(@purchase_destination.errors.full_messages).to include('Telephone number is too short (minimum is 10 characters)')
       end
 
       it 'telephone_numberが12桁以上では購入できないこと' do
-        @purchase_destination.telephone_number = 123456789101
+        @purchase_destination.telephone_number = 123_456_789_101
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include("Telephone number is too long (maximum is 11 characters)")
+        expect(@purchase_destination.errors.full_messages).to include('Telephone number is too long (maximum is 11 characters)')
       end
 
       it 'tokenが空では購入できないこと' do
