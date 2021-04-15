@@ -8,7 +8,7 @@ RSpec.describe PurchaseDestination, type: :model do
     end
     
     context '商品購入ができるとき' do
-      it 'zip_code,purchase_id,municipality,address,telephone_numberが存在すれば購入できること' do
+      it 'zip_code,purchase_id,municipality,address,telephone_number,tokenが存在すれば購入できること' do
         expect(@purchase_destination).to be_valid
       end
 
@@ -82,6 +82,12 @@ RSpec.describe PurchaseDestination, type: :model do
         @purchase_destination.telephone_number = 123456789101
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include("Telephone number is too long (maximum is 11 characters)")
+      end
+
+      it 'tokenが空では購入できないこと' do
+        @purchase_destination.token = nil
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
