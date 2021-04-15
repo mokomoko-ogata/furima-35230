@@ -4,7 +4,9 @@ RSpec.describe PurchaseDestination, type: :model do
   describe '商品購入機能' do
     before do
       user = FactoryBot.create(:user)
-      @purchase_destination = FactoryBot.build(:purchase_destination, user_id: user.id)
+      item = FactoryBot.create(:item)
+      @purchase_destination = FactoryBot.build(:purchase_destination, user_id: user.id, item_id: item.id)
+      sleep(1)
     end
 
     context '商品購入ができるとき' do
@@ -22,8 +24,13 @@ RSpec.describe PurchaseDestination, type: :model do
         expect(@purchase_destination).to be_valid
       end
 
+      it 'building_nameが空でも保存できること' do
+        @purchase_destination.building_name = nil
+        expect(@purchase_destination).to be_valid
+      end
+
       it 'telephone_numberが11桁以内の場合購入できること' do
-        @purchase_destination.telephone_number = 12_345_678_910
+        @purchase_destination.telephone_number = '12345678910'
         expect(@purchase_destination).to be_valid
       end
     end
@@ -72,15 +79,27 @@ RSpec.describe PurchaseDestination, type: :model do
       end
 
       it 'telephone_numberはハイフンがあると購入できないこと' do
-        @purchase_destination.telephone_number = 123 - 4567 - 8910
+        @purchase_destination.telephone_number = '123 - 4567 - 8910'
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include('Telephone number is too short (minimum is 10 characters)')
+        expect(@purchase_destination.errors.full_messages).to include('Telephone number is not a number')
       end
 
       it 'telephone_numberが12桁以上では購入できないこと' do
-        @purchase_destination.telephone_number = 123_456_789_101
+        @purchase_destination.telephone_number = '123456789101'
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include('Telephone number is too long (maximum is 11 characters)')
+      end
+
+      it 'user_idが空では購入できない' do
+        @purchase_destination.user_id = nil
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空では購入できない' do
+        @purchase_destination.item_id = nil
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Item can't be blank")
       end
 
       it 'tokenが空では購入できないこと' do
