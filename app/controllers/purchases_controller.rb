@@ -39,7 +39,7 @@ class PurchasesController < ApplicationController
     @item = Item.find_by(id: params[:item_id])
   end
 
-  def move_to_index_for_current
+  def move_to_index
     redirect_to root_path if current_user.id == @item.user_id || @item.purchase.present?
   end
 end
