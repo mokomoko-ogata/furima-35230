@@ -78,6 +78,12 @@ RSpec.describe PurchaseDestination, type: :model do
         expect(@purchase_destination.errors.full_messages).to include("Telephone number can't be blank")
       end
 
+      it 'telephone_numberは英数混合では購入できないこと' do
+        @purchase_destination.telephone_number = '1two3one445'
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Telephone number is not a number")
+      end
+
       it 'telephone_numberはハイフンがあると購入できないこと' do
         @purchase_destination.telephone_number = '123 - 4567 - 8910'
         @purchase_destination.valid?
