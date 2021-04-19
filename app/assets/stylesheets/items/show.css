@@ -27,10 +27,15 @@
 
 .item-box-img {
   height: 50vh;
-  width: 60vw;
+  width: 100%;
   min-height: 500px;
   background-color: rgb(205, 202, 202);
   object-fit: contain;
+}
+
+.item-img-content{
+  display: flex;
+  justify-content: center;
 }
 
 .item-price-box {
