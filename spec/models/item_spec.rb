@@ -7,7 +7,7 @@ RSpec.describe Item, type: :model do
     end
 
     context '商品出品ができるとき' do
-      it 'image、item_name、explain、category、condition、delivery_charge、prefecture、shipping_date、priceが存在していれば保存できること' do
+      it 'images、item_name、explain、category、condition、delivery_charge、prefecture、shipping_date、priceが存在していれば保存できること' do
         expect(@item).to be_valid
       end
 
@@ -53,10 +53,10 @@ RSpec.describe Item, type: :model do
     end
 
     context '商品出品できないとき' do
-      it 'imageが空では保存できないこと' do
-        @item.image = nil
+      it 'imagesが空では保存できないこと' do
+        @item.images = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Image can't be blank")
+        expect(@item.errors.full_messages).to include("Images can't be blank")
       end
 
       it 'item_nameが空では保存できないこと' do
