@@ -4,6 +4,6 @@ class Card < ApplicationRecord
   with_options presence: true do
     validates :card_token
     validates :customer_token
-    #validates :user_id
+    # validates :user_id
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe Card, type: :model do
     it 'userが紐づいていないと登録できない' do
       @card.user = nil
       @card.valid?
-      expect(@card.errors.full_messages).to include("User must exist")
+      expect(@card.errors.full_messages).to include('User must exist')
     end
   end
 end

@@ -8,8 +8,8 @@ class PurchasesController < ApplicationController
     card = Card.find_by(user_id: current_user.id)
     if card.blank?
       redirect_to new_card_path
-    else 
-      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    else
+      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
       customer = Payjp::Customer.retrieve(card.customer_token)
       @default_card = customer.cards.first
     end
@@ -18,6 +18,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase_destination = PurchaseDestination.new(purchase_params)
     redirect_to new_card_path and return unless current_user.card.present?
+
     if @purchase_destination.valid?
       pay_item
       @purchase_destination.save
