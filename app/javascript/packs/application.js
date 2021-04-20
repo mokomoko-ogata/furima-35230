@@ -9,7 +9,6 @@ require("channels")
 require("../item_price")
 require("../card")
 require("../preview")
-require("../show")
 require('jquery')
 
 
