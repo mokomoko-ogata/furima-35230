@@ -82,50 +82,29 @@
 
 /* /支払額の表示 */
 
-/* カード情報の入力 */
-.credit-card-form {
-  border-bottom: 2px solid #f5f5f5;
-  margin-top: 15px;
-  padding-bottom: 30px;
-}
+/* カード情報の表示 */
 
-.info-input-haedline {
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.available-card {
-  display: flex;
-  height: 35px;
-}
-
-.card-logo {
-  width: 40px;
-  margin: 5px 5px;
-}
-
-.input-expiration-date-wrap {
+.card-detail-table {
+  margin-bottom: 30px;
   width: 100%;
-  display: flex;
-  text-align: center;
-  line-height: 55px;
 }
 
-.input-expiration-date {
+.card-detail-item {
   width: 20%;
-  margin-top: 5px;
-  height: 48px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 16px;
-  resize: none;
-  line-height: 45px;
+  background-color: #eee;
+  border: 1px solid #dedede;
+  font-size: 14px;
   text-align: center;
 }
 
-/* /カード情報の入力 */
+.card-detail-value {
+  width: 80%;
+  padding: 20px;
+  border: 1px solid #dedede;
+  font-size: 14px;
+}
+
+/* /カード情報の表示 */
 
 /* 配送先の入力 */
 .shipping-address-form {
