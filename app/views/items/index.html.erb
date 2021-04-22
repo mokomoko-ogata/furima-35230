@@ -120,6 +120,34 @@
   </div>
   <%# /FURIMAの特徴 %>
 
+  <%# 商品検索 %>
+  <h1>
+    商品検索
+  </h1>
+  <%= search_form_for @p, url: items_search_path do |f| %>
+    <%= f.label :item_name_eq, '商品名' %>
+    <%= f.collection_select :item_name_eq, @item_name, :item_name, :item_name,  include_blank: '指定なし' %>
+    <br>
+    <%= f.label :category_id_eq, 'カテゴリー：' %>
+    <%= f.collection_select :category_id_eq, Category.all, :id, :name, include_blank: '指定なし' %>
+    <br>
+    <%= f.label :condition_id_eq, '商品の状態：' %>
+    <%= f.collection_select :condition_id_eq, Condition.all, :id, :name, include_blank: '指定なし' %>
+    <br>
+    <%= f.label :price, '価格：' %>
+    <%= f.radio_button :price_lteq, '' %>
+    指定なし
+    <%= f.radio_button :price_lteq, '1000' %>
+    1000円以下
+    <%= f.radio_button :price_lteq, '2500' %>
+    2500円以下
+    <%= f.radio_button :price_lteq, '5000' %>
+    5000円以下
+    <br>
+    <%= f.submit '検索' %>
+  <% end %>
+  <%# /商品検索 %>
+
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
