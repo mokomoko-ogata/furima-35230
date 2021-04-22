@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @results = @p.result# 検索条件にマッチした商品の情報を取得
+    @results = @p.result # 検索条件にマッチした商品の情報を取得
   end
 
   private
@@ -64,6 +64,6 @@ class ItemsController < ApplicationController
   end
 
   def set_item_column
-    @item_name = Item.select("item_name").distinct  # 重複なくnameカラムのデータを取り出す
+    @item_name = Item.select('item_name').distinct  # 重複なくnameカラムのデータを取り出す
   end
 end
