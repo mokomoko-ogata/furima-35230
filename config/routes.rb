@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'cards/new'
+  get 'items/search'
   devise_for :users
   root to: "items#index"
   resources :items do
