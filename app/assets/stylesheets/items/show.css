@@ -143,6 +143,29 @@
   margin-right: 5px;
 }
 
+.comment-area{
+  width: 50%;
+  height: 200px;
+  margin-top: 10px;
+  border: 1px solid #3CCACE;
+  position: relative;
+}
+
+.comment-input{
+  position: absolute;
+  bottom: 1px;
+}
+
+.comment-input-form{
+  width: 400px;
+}
+
+#comments{
+  width: 100%;
+  height: 165px;
+  border-bottom: 1px solid #3CCACE;
+  overflow: scroll;
+}
 
 /* /商品の概要 */
 

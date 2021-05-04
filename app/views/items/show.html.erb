@@ -75,10 +75,22 @@
         <span>不適切な商品の通報</span>
       </div>
     </div>
+    <div class="comment-area">
+      <div class="comment-input">
+        <%= form_with model: @comment, url: item_comments_path(@item.id) do |f| %>
+          <%= f.text_field :text, class: "comment-input-form" %>
+          <%= f.submit '送信' %>
+        <% end %>
+      </div>
+      <div id='comments'>
+        <% @comments.reverse_each do |comment| %>
+          <p><%= comment.user.nickname %> : <%= comment.text %></p>
+        <% end %>
+      </div>
+    </div>
   </div>
   <%# /商品の概要 %>
-
-  <div class="comment-box">
+  <!-- <div class="comment-box">
     <form>
       <textarea class="comment-text"></textarea>
       <p class="comment-warn">
@@ -91,7 +103,7 @@
         <span>コメントする<span>
       </button>
     </form>
-  </div>
+  </div> -->
   <div class="links">
     <a href="#" class="change-item-btn">
       ＜ 前の商品
