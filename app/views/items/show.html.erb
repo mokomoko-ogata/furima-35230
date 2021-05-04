@@ -77,9 +77,9 @@
     </div>
     <div class="comment-area">
       <div class="comment-input">
-        <%= form_with model: @comment, url: item_comments_path(@item.id) do |f| %>
+        <%= form_with model: @comment, url: item_comments_path(@item.id), class:"comment-form-area" do |f| %>
           <%= f.text_field :text, class: "comment-input-form" %>
-          <%= f.submit '送信' %>
+          <%= f.submit '送信', class: "comment-submit" %>
         <% end %>
       </div>
       <div id='comments'>
