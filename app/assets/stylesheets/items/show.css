@@ -151,13 +151,22 @@
   position: relative;
 }
 
+.comment-form-area{
+  display: flex;
+}
+
 .comment-input{
+  width: 100%;
   position: absolute;
   bottom: 1px;
 }
 
 .comment-input-form{
-  width: 400px;
+  width: 90%;
+}
+
+.comment-submit{
+  width: 10%;
 }
 
 #comments{
@@ -169,7 +178,7 @@
 
 /* /商品の概要 */
 
-.comment-box {
+/*.comment-box {
   width: 40vw;
   background-color: #fff;
   margin: 5vh 0;
@@ -210,7 +219,7 @@
 
 .comment-flag-icon {
   margin: 10px 5px 0 0;
-}
+}  */
 
 .links {
   display: flex;
