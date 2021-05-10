@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # テスト実行時はbasic認証をコメントアウト
-RSpec.describe "商品出品", type: :system do
+RSpec.describe '商品出品', type: :system do
   before do
     @user = FactoryBot.create(:user)
     @item = FactoryBot.build(:item)
@@ -9,18 +9,18 @@ RSpec.describe "商品出品", type: :system do
 
   context '商品出品できるとき' do
     it 'ログインしたユーザーは商品出品できる' do
-      #ログインする
+      # ログインする
       visit new_user_session_path
       fill_in 'user[email]', with: @user.email
       fill_in 'user[password]', with: @user.password
       find('input[name="commit"]').click
       expect(current_path).to eq(root_path)
-      #商品出品ページへのリンクがあることを確認する
+      # 商品出品ページへのリンクがあることを確認する
       expect(page).to have_content('出品する')
-      #出品ページに遷移する
+      # 出品ページに遷移する
       visit new_item_path
-      #フォームに情報を入力する
-      attach_file "item-image", "#{Rails.root}/public/images/test_image.png"
+      # フォームに情報を入力する
+      attach_file 'item-image', "#{Rails.root}/public/images/test_image.png"
       fill_in 'item[item_name]', with: @item.item_name
       fill_in 'item[explain]', with: @item.explain
       select 'レディース', from: 'item[category_id]'
@@ -29,19 +29,19 @@ RSpec.describe "商品出品", type: :system do
       select '北海道', from: 'item[prefecture_id]'
       select '1~2日で発送', from: 'item[shipping_date_id]'
       fill_in 'item[price]', with: @item.price
-      #出品するとItemモデルのカウントが1上がることを確認する
-      expect{
+      # 出品するとItemモデルのカウントが1上がることを確認する
+      expect  do
         find('input[name="commit"]').click
-      }.to change { Item.count }.by(1)
-      #トップページに遷移することを確認する
+      end.to change { Item.count }.by(1)
+      # トップページに遷移することを確認する
       expect(current_path).to eq(root_path)
-      #トップページには先ほど出品した内容の商品が存在することを確認する（画像）
+      # トップページには先ほど出品した内容の商品が存在することを確認する（画像）
       expect(page).to have_selector("img[src$='test_image.png']")
-      #トップページには先ほど出品した内容の商品が存在することを確認する（商品名）
+      # トップページには先ほど出品した内容の商品が存在することを確認する（商品名）
       expect(page).to have_content(@item.item_name)
-      #トップページには先ほど出品した内容の商品が存在することを確認する（価格）
+      # トップページには先ほど出品した内容の商品が存在することを確認する（価格）
       expect(page).to have_content(@item.price)
-      #トップページには先ほど出品した内容の商品が存在することを確認する（送料の負担）
+      # トップページには先ほど出品した内容の商品が存在することを確認する（送料の負担）
       expect(page).to have_content('着払い(購入者負担)')
     end
   end
@@ -50,8 +50,8 @@ RSpec.describe "商品出品", type: :system do
       # トップページに遷移する
       visit root_path
       # 出品ページに遷移しようとするとログインページにリダイレクトされる
-      get new_item_path 
-      expect(response).to redirect_to "/users/sign_in"
+      get new_item_path
+      expect(response).to redirect_to '/users/sign_in'
     end
   end
 end
@@ -84,24 +84,24 @@ RSpec.describe '商品情報編集', type: :system do
       ).to eq(@item1.explain)
       expect(
         find('#item-category').value
-      ).to eq("#{@item1.category_id}")
+      ).to eq(@item1.category_id.to_s)
       expect(
         find('#item-sales-status').value
-      ).to eq("#{@item1.condition_id}")
+      ).to eq(@item1.condition_id.to_s)
       expect(
         find('#item-shipping-fee-status').value
-      ).to eq("#{@item1.delivery_charge_id}")
+      ).to eq(@item1.delivery_charge_id.to_s)
       expect(
         find('#item-prefecture').value
-      ).to eq("#{@item1.prefecture_id}")
+      ).to eq(@item1.prefecture_id.to_s)
       expect(
         find('#item-scheduled-delivery').value
-      ).to eq("#{@item1.shipping_date_id}")
+      ).to eq(@item1.shipping_date_id.to_s)
       expect(
         find('#item-price').value
-      ).to eq("#{@item1.price}")
+      ).to eq(@item1.price.to_s)
       # 商品情報を編集する
-      attach_file "item-image", "#{Rails.root}/public/images/test2_image.jpeg"
+      attach_file 'item-image', "#{Rails.root}/public/images/test2_image.jpeg"
       fill_in 'item[item_name]', with: "#{@item1.item_name}+編集したテキスト"
       fill_in 'item[explain]', with: "#{@item1.explain}+編集したテキスト"
       select 'レディース', from: 'item[category_id]'
@@ -109,31 +109,31 @@ RSpec.describe '商品情報編集', type: :system do
       select '着払い(購入者負担)', from: 'item[delivery_charge_id]'
       select '北海道', from: 'item[prefecture_id]'
       select '1~2日で発送', from: 'item[shipping_date_id]'
-      fill_in 'item[price]', with: "#{@item1.price + 200}"
+      fill_in 'item[price]', with: (@item1.price + 200).to_s
       # 編集してもItemモデルのカウントは変わらないことを確認する
-      expect{
+      expect  do
         find('input[name="commit"]').click
-      }.to change { Item.count }.by(0)
+      end.to change { Item.count }.by(0)
       # 商品詳細ページに遷移したことを確認する
       expect(current_path).to eq(item_path(@item1.id))
       # 詳細ページには先ほど変更した内容の商品が存在している(画像)
-      #expect(page).to have_selector("img[src$='test2_image.jpeg']")
+      # expect(page).to have_selector("img[src$='test2_image.jpeg']")
       # 詳細ページには先ほど変更した内容の商品が存在している(商品名)
       expect(page).to have_content("#{@item1.item_name}+編集したテキスト")
       # 詳細ページには先ほど変更した内容の商品が存在している(説明)
       expect(page).to have_content("#{@item1.explain}+編集したテキスト")
       # 詳細ページには先ほど変更した内容の商品が存在している(カテゴリー)
-      expect(page).to have_content("レディース")
+      expect(page).to have_content('レディース')
       # 詳細ページには先ほど変更した内容の商品が存在している(状態)
-      expect(page).to have_content("未使用に近い")
+      expect(page).to have_content('未使用に近い')
       # 詳細ページには先ほど変更した内容の商品が存在している(配送料の負担)
-      expect(page).to have_content("着払い(購入者負担)")
+      expect(page).to have_content('着払い(購入者負担)')
       # 詳細ページには先ほど変更した内容の商品が存在している(発送元の地域)
-      expect(page).to have_content("北海道")
+      expect(page).to have_content('北海道')
       # 詳細ページには先ほど変更した内容の商品が存在している(発送までの日数)
-      expect(page).to have_content("1~2日で発送")
+      expect(page).to have_content('1~2日で発送')
       # 詳細ページには先ほど変更した内容の商品が存在している(販売価格)
-      expect(page).to have_content("#{@item1.price + 200}")
+      expect(page).to have_content((@item1.price + 200).to_s)
     end
   end
 
@@ -183,9 +183,9 @@ RSpec.describe '商品削除', type: :system do
       # 削除ボタンがあることを確認する
       expect(page).to have_content('削除')
       # 投稿を削除するとレコードのカウントが1減ることを確認する
-      expect{
+      expect do
         find('.item-destroy').click
-      }.to change { Item.count }.by(-1)
+      end.to change { Item.count }.by(-1)
       # トップページに遷移したことを確認する
       expect(current_path).to eq(root_path)
       # トップページには商品1の内容が存在しないことを確認する
@@ -236,15 +236,15 @@ RSpec.describe '商品詳細', type: :system do
     # 商品の詳細が表示されていることを確認する(説明)
     expect(page).to have_content(@item.explain)
     # 商品の詳細が表示されていることを確認する(カテゴリー)
-    expect(page).to have_content("レディース")
+    expect(page).to have_content('レディース')
     # 商品の詳細が表示されていることを確認する(状態)
-    expect(page).to have_content("新品、未使用")
+    expect(page).to have_content('新品、未使用')
     # 商品の詳細が表示されていることを確認する(配送料の負担)
-    expect(page).to have_content("着払い(購入者負担)")
+    expect(page).to have_content('着払い(購入者負担)')
     # 商品の詳細が表示されていることを確認する(配送元の地域)
-    expect(page).to have_content("北海道")
+    expect(page).to have_content('北海道')
     # 商品の詳細が表示されていることを確認する(発送までの日数)
-    expect(page).to have_content("1~2日で発送")
+    expect(page).to have_content('1~2日で発送')
     # 商品の詳細が表示されていることを確認する(価格)
     expect(page).to have_content(@item.price)
   end
