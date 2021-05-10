@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# テスト実行時はbasic認証をコメントアウト
 RSpec.describe "商品出品", type: :system do
   before do
     @user = FactoryBot.create(:user)

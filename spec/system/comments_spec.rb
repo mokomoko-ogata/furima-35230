@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# テスト実行時はbasic認証をコメントアウト
 RSpec.describe "コメント投稿", type: :system do
   before do
     @item = FactoryBot.create(:item)
