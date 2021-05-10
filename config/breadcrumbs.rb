@@ -8,7 +8,7 @@ crumb :cards do
 end
 
 crumb :items do
-  link "商品詳細ページ", item_path
+  link "商品詳細ページ", item_path(:id)
   parent :root
 end
 
