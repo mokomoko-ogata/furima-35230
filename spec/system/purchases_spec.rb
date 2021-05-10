@@ -70,7 +70,7 @@ RSpec.describe "商品購入機能", type: :system do
   context '商品購入できないとき' do
     it '自分が出品した商品は購入できない' do
       # 商品を出品したユーザーでログインする
-      visit new_user_session_path
+      basic_pass new_user_session_path
       fill_in 'user[email]', with: @item.user.email
       fill_in 'user[password]', with: @item.user.password
       find('input[name="commit"]').click
@@ -82,7 +82,7 @@ RSpec.describe "商品購入機能", type: :system do
     end
     it 'ログインしていないユーザーは商品購入できない' do
       # トップページにいる
-      visit root_path
+      basic_pass root_path
       # 商品詳細ページに遷移する
       visit item_path(@item.id)
       # 購入画面に進むボタンが無いことを確認する
